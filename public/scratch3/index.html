@@ -21,7 +21,7 @@
     var unitId = urlParams('unitId')
     var workFileUrl = urlParams('workFile') //SB3路径
     var workName = urlParams('workName') //作业名
-    if(workName) workName = decodeURIComponent(workName)
+    if (workName) workName = decodeURIComponent(workName)
     var departId = urlParams('departId') //班级ID
     var additionalId = urlParams('additionalId') //附加作业ID
     var scene = urlParams("scene") || 'create' //来源
@@ -42,25 +42,25 @@
       complete(res) {
         console.log(res)
         if (res.key.endsWith('.jpg')) {
-          uploadParam.coverKey = uploadFile(res.key, '学生作业-封面', res.key,2)
+          uploadParam.coverKey = uploadFile(res.key, '学生作业-封面', res.key, 2)
         } else {
-          uploadParam.projectKey = uploadFile(res.key, '学生作业-sb3', res.key,2)
+          uploadParam.projectKey = uploadFile(res.key, '学生作业-sb3', res.key, 2)
         }
         uploadWork()
       }
     }
 
-    function handleFileUploaded(res){
+    function handleFileUploaded(res) {
       console.log(res);
-      if(res.success){
+      if (res.success) {
         var key = res.message
-        if(key.endsWith('.jpg')){
-          uploadParam.coverKey = uploadFile(key, '学生作业-封面', key,1)
-        }else{
-          uploadParam.projectKey = uploadFile(key, '学生作业-sb3', key,1)
+        if (key.endsWith('.jpg')) {
+          uploadParam.coverKey = uploadFile(key, '学生作业-封面', key, 1)
+        } else {
+          uploadParam.projectKey = uploadFile(key, '学生作业-sb3', key, 1)
         }
         uploadWork()
-      }else{
+      } else {
         alert("上传失败：" + res.message)
       }
     }
@@ -71,14 +71,14 @@
         username: userInfo.realname || userInfo.username || '',
         //avatar: getQiniuUrl(userInfo.avatar) || './static/avatar.png',
       },
-      backpack:{
+      backpack: {
         enable: true,
         api: "/api/teaching/scratch/backpack",
       },
-      cloudData:{
+      cloudData: {
         enable: true,
         id: "create", //云变量ID，提交作业后使用window.scratch.setCloudId换成作品ID
-        api: window.location.hostname +"/api/websocket/scratch/cloudData" //云变量API地址
+        api: window.location.hostname + "/api/websocket/scratch/cloudData" //云变量API地址
       },
       projectInfo: {//作品信息
         projectName: "",
@@ -93,24 +93,24 @@
         }
       },
       stageArea: {
-        fullscreenButton:{ //全屏按钮
+        fullscreenButton: { //全屏按钮
           show: true,
-          handleBeforeSetStageUnFull(){ //退出全屏前的操作
+          handleBeforeSetStageUnFull() { //退出全屏前的操作
             return true
           },
-          handleBeforeSetStageFull(){ //全屏前的操作
+          handleBeforeSetStageFull() { //全屏前的操作
             return true
           }
         },
-        startButton:{ //开始按钮
+        startButton: { //开始按钮
           show: true,
-          handleBeforeStart(){ //开始前的操作
+          handleBeforeStart() { //开始前的操作
             return true
           }
         },
-        stopButton:{ // 停止按钮
+        stopButton: { // 停止按钮
           show: true,
-          handleBeforeStop(){ //停止前的操作
+          handleBeforeStop() { //停止前的操作
             return true
           }
         }
@@ -121,51 +121,51 @@
           background: 'hsla(215, 100%, 65%, 1)',
         },
         //切换语言按钮
-        languageButton:{
+        languageButton: {
           show: false, //是否显示
           defaultLanguage: 'zh-cn' //默认语言 en zh-cn zh-tw
         },
         //新建按钮
-        newButton:{
+        newButton: {
           show: true,
-          handleBefore(){
+          handleBefore() {
             return true
           }
         },
         //从计算机加载按钮
-        loadFileButton:{
+        loadFileButton: {
           show: true,
-          handleBefore(){
+          handleBefore() {
             return true
           }
         },
         //保存到计算机按钮
-        saveFileButton:{
+        saveFileButton: {
           show: true,
-          handleBefore(){
+          handleBefore() {
             return true
           }
         },
         //加速模式按钮
-        turboModeButton:{
+        turboModeButton: {
           show: true
         },
         //教程按钮
-        helpButton:{
+        helpButton: {
           show: true,
-          handleBefore: ()=>{return true}
+          handleBefore: () => { return true }
         },
-         //我的物品按钮
-         myStuff:{
+        //我的物品按钮
+        myStuff: {
           show: true,
           url: '/account/center'
         },
         //用户头像按钮
-        userAvatar:{
+        userAvatar: {
           show: true,
           username: (userInfo && userInfo.realname) || '未登录',
           avatar: (userInfo && getFileAccessHttpUrl(userInfo.avatar)) || './static/avatar.png',
-          handleClick(){
+          handleClick() {
             //弹出登录框等操作
             console.log("点击头像")
             window.open("/account/settings/BaseSetting")
@@ -175,11 +175,11 @@
           {
             show: qn_token,
             buttonName: '提交',
-            style:{
+            style: {
               color: 'white',
               background: 'hsla(30, 100%, 55%, 1)',
             },
-            handleClick:()=>{
+            handleClick: () => {
               requestUpload(1)
             }
           },
@@ -190,7 +190,7 @@
               color: 'white',
               background: 'hsl(271deg 89% 70%)',
             },
-            handleClick:()=>{
+            handleClick: () => {
               requestUpload(0)
             }
           },
@@ -201,18 +201,18 @@
               color: 'white',
               background: 'rgb(90 132 225)',
             },
-            handleClick:()=>{
+            handleClick: () => {
               window.location.href = '/account/center'
             }
           },
           //可继续新增按钮
         ],
       },
-      blocks:{
+      blocks: {
         scale: 0.8, // 积木缩放比例
         // 隐藏分类
-        hideCatagorys:[],
-        hideBlocks:[],
+        hideCatagorys: [],
+        hideBlocks: [],
       },
       handleVmInitialized: (vm) => {
         window.vm = vm
@@ -223,13 +223,13 @@
       },
       handleDefaultProjectLoaded: () => {
         //默认作品加载完毕
-        if(workFileUrl){
+        if (workFileUrl) {
           window.scratch.loadProject(workFileUrl, () => {
             $('.loading').hide()
             $('.scratch-filter').hide()
             window.scratch.setProjectName(workName)
           })
-        }else if (workId) {
+        } else if (workId) {
           getWorkInfo(workId, function (info) {
             window.scratch.loadProject(info.workFileKey_url, () => {
               $('.loading').hide()
@@ -239,8 +239,8 @@
               window.scratch.setCloudId(workId)
             })
           })
-        } else if(unitId){
-          getUnitInfo(unitId, function(info){
+        } else if (unitId) {
+          getUnitInfo(unitId, function (info) {
             window.scratch.loadProject(info.courseWork_url, () => {
               $('.loading').hide()
               $('.scratch-filter').hide()
@@ -249,7 +249,7 @@
           })
         } else {
           window.scratch.loadProject('/project/project.sb3', () => {
-            window.scratch.setProjectName(userInfo&&userInfo.realname?userInfo.realname + '作品' : 'Scratch作品')
+            window.scratch.setProjectName(userInfo && userInfo.realname ? userInfo.realname + '作品' : 'Scratch作品')
             $('.loading').hide()
             $('.scratch-filter').hide()
           })
@@ -258,43 +258,43 @@
       //默认项目地址
       defaultProjectURL: "./static/project.sb3",
       //素材库配置
-      assets:{
+      assets: {
         //素材库地址
         // assetHost: getSysConfig('qiniuDomain'), //使用七牛云的素材库,如果需要使用系统的自定义素材库，必须使用七牛云存储
         assetHost: './static',
         //素材库索引地址
-        defaultIndex:{
+        defaultIndex: {
           sprites: "./static/json_index/sprites.json",
           costumes: "./static/json_index/costumes.json",
           backdrops: "./static/json_index/backdrops.json",
           sounds: "./static/json_index/sounds.json"
         },
         //拦截角色库打开
-        handleBeforeSpriteLibraryOpen(){
+        handleBeforeSpriteLibraryOpen() {
           console.log("角色库打开")
           //追加素材库
-          window.getScratchAssets(4,data=>{
+          window.getScratchAssets(4, data => {
             window.scratch.pushSpriteLibrary(data)
           })
           return true;
         },
         //拦截造型库打开
-        handleBeforeCostumesLibraryOpen(){
-          window.getScratchAssets(3,data=>{
+        handleBeforeCostumesLibraryOpen() {
+          window.getScratchAssets(3, data => {
             window.scratch.pushCostumesLibrary(data)
           })
           return true;
         },
         //拦截背景库打开
-        handleBeforeBackdropsLibraryOpen(){
-          window.getScratchAssets(1,data=>{
+        handleBeforeBackdropsLibraryOpen() {
+          window.getScratchAssets(1, data => {
             window.scratch.pushBackdropsLibrary(data)
           })
           return true;
         },
         //拦截声音库打开
-        handleBeforeSoundLibraryOpen(){
-          window.getScratchAssets(2,data=>{
+        handleBeforeSoundLibraryOpen() {
+          window.getScratchAssets(2, data => {
             window.scratch.pushSoundsLibrary(data)
           })
           return true;
@@ -303,7 +303,7 @@
     }
     // console.log(getSysConfig('qiniuDomain'))
     //请求提交作业
-    function requestUpload(status){
+    function requestUpload(status) {
       qn_token = getQiniuToken();
       workStatus = status
       $('.scratch-filter').show()
@@ -312,16 +312,16 @@
       uploadParam.projectTitle = window.scratch.getProjectName()
       var defaultUploadType = getSysConfig('uploadType')
       window.scratch.getProjectCoverBlob(cover => {
-        if(defaultUploadType == 'qiniu'){
+        if (defaultUploadType == 'qiniu') {
           upload2Qiniu(cover, 'project3/' + uuid + '.jpg', uploadParam.projectTitle, observer)
-        }else{
-          update2Local(cover,uploadParam.projectTitle + ".jpg", 'project3', handleFileUploaded)
+        } else {
+          update2Local(cover, uploadParam.projectTitle + ".jpg", 'project3', handleFileUploaded)
         }
       })
       window.scratch.getProjectFile(file => {
-        if(defaultUploadType == 'qiniu'){
+        if (defaultUploadType == 'qiniu') {
           upload2Qiniu(file, 'project3/' + uuid + '.sb3', uploadParam.projectTitle, observer)
-        }else{
+        } else {
           update2Local(file, uploadParam.projectTitle + '.sb3', 'project3', handleFileUploaded)
         }
       })
@@ -356,8 +356,8 @@
         success: function (res) {
           canShare = true
           if (res.code == 200) {
-             //如果包含云变量
-            if(window.vm.runtime.hasCloudData()){
+            //如果包含云变量
+            if (window.vm.runtime.hasCloudData()) {
               workId = res.result.id
               //更新cloudId
               window.scratch.setCloudId(workId)
@@ -371,7 +371,7 @@
               '/work-detail?id=' +
               res.result.id
             createCode('qrcode', shareUrl)
-		        var img = document.createElement('img');
+            var img = document.createElement('img');
             img.id = 'qrCodeIco';
             img.src = '/logo.png';
             qrcode.appendChild(img);
@@ -416,7 +416,7 @@
       <div class="con-box">
         <h4><span id="projectTitle"></span> 提交成功</h4>
         <p class="ercode-img">
-		      <span id="qrcode" style="align-items: center;display: flex; justify-content: center;"></span>
+          <span id="qrcode" style="align-items: center;display: flex; justify-content: center;"></span>
         </p>
         <div class="watch-works">
           <span>微信扫描二维码使用手机体验</span>
